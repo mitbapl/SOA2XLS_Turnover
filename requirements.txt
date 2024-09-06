@@ -1,9 +1,7 @@
 pandas
-numpy
+numpy==1.21.6
 tabula
-os
-python_version >=3.7,<3.11
 flask
 gunicorn>=19.7.1
-numpy==1.21.6
 requests==2.28.1
+
