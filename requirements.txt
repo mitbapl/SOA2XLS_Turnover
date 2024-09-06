@@ -1,7 +1,6 @@
+Flask
 pandas
 numpy==1.21.6
-tabula
-flask
+tabula-py
 gunicorn>=19.7.1
 requests==2.28.1
-
