@@ -6,7 +6,11 @@ import os
 import math
 
 app = Flask(__name__)
+app.config['DEBUG'] = True
 app.config['UPLOAD_FOLDER'] = 'uploads/'  # Folder to store uploaded files
+@app.errorhandler(500)
+def internal_error(error):
+    return "Internal Server Error", 500
 
 # Helper Functions
 def abc(a):
