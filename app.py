@@ -317,7 +317,7 @@ def upload_file():
                 return send_file(output_file, as_attachment=True)
             else:
                 return "Error in processing the file"
-    return redirect(url_for('Index'))
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
