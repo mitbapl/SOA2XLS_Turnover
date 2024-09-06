@@ -304,6 +304,7 @@ def upload_file():
         if file:
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(file_path)
+            print(file_path)
             df_statement, df_turnover = process_hdfc(file_path)
             if df_statement is not None:
                 output_file = os.path.join(app.config['UPLOAD_FOLDER'], 'processed_hdfc.xlsx')
