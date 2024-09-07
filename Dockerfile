@@ -1,4 +1,14 @@
 FROM python:3.9
+FROM continuumio/miniconda3
+
+# Install mamba
+RUN conda install mamba -c conda-forge
+
+# Create the environment and install packages
+RUN mamba create -n pyimagej pyimagej openjdk=8 -c conda-forge
+
+# Activate the environment and set the working directory
+SHELL ["conda", "run", "-n", "pyimagej", "/bin/bash", "-c"]
 
 # Install JDK
 RUN apt-get update && \
