@@ -12,10 +12,11 @@
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export PATH=$JAVA_HOME/bin:$PATH
 # export LD_LIBRARY_PATH=$JAVA_HOME/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/usr/lib/jvm/java-8-openjdk-amd64/lib/server
+# export LD_LIBRARY_PATH=/usr/lib/jvm/java-8-openjdk-amd64/lib/server
 # Verify Java installation
 #java -version
-
+export LD_LIBRARY_PATH=/usr/lib/jvm/java-8-oracle/jre/lib/amd64/server
+# sudo R CMD javareconf
 # Continue with your deployment process
 # For example, you might want to install other dependencies or run your application
 # npm install or pip install -r requirements.txt
