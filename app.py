@@ -34,6 +34,12 @@ def isnan(value):
 
 # HDFC Processing Function
 def process_hdfc(f):
+    # Get the JAVA_HOME environment variable
+    java_home = os.environ.get('JAVA_HOME')
+    if java_home:
+        print(f"JAVA_HOME is set to: {java_home}")
+    else:
+        print("JAVA_HOME is not set.")
     print(os.environ['JAVA_HOME'])
     print(os.environ['PATH'])
     try:
