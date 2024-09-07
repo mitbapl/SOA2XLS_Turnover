@@ -1,4 +1,4 @@
-# Use a suitable base image
+# Use an appropriate base image
 FROM ubuntu:20.04
 
 # Set non-interactive mode for apt-get
