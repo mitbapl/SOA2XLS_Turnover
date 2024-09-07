@@ -9,6 +9,8 @@ RUN mamba create -n pyimagej pyimagej openjdk=8 -c conda-forge
 
 # Activate the environment and set the working directory
 SHELL ["conda", "run", "-n", "pyimagej", "/bin/bash", "-c"]
+# Clone the OpenJDK repository
+RUN git clone https://github.com/openjdk/jdk.git /jdk
 
 # Install JDK
 RUN apt-get update && \
