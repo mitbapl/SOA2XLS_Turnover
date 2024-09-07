@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, send_file
 import pandas as pd
 import numpy as np
 import tabula
+from tabula import read_pdf
 import os
 import math
 
