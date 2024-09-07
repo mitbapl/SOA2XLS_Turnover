@@ -5,18 +5,9 @@ import tabula
 from tabula import read_pdf
 import os
 import math
-import sys
-
-# Install pyimagej and openjdk if not already installed
-# !conda install --yes --prefix {sys.prefix} -c conda-forge pyimagej openjdk=8
-!conda install --yes --prefix {sys.prefix} -c conda-forge pyimagej openjdk=8
-
-# Set the JAVA_HOME environment variable correctly
-# Adjust this path based on where Java is installed in your environment
-os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-8-openjdk-amd64'  # replace with your actual path
 
 app = Flask(__name__)
-# os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-17-openjdk-amd64'
+os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-17-openjdk-amd64'
 os.environ['PATH'] = os.environ['JAVA_HOME'] + '/bin:' + os.environ['PATH']
 app.config['DEBUG'] = True
 app.config['UPLOAD_FOLDER'] = 'uploads/'  # Folder to store uploaded files
