@@ -1,12 +1,16 @@
-# Use an official OpenJDK image
-FROM openjdk:11-jre-slim
+# Use an official Python image
+FROM python:3.11-slim
 
-# Install Python
+# Install necessary packages
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y \
+    openjdk-11-jdk \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set environment variables for Java
+# Set environment variables
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH="$JAVA_HOME/bin:$PATH"
 ENV PYTHONUNBUFFERED=1
@@ -14,11 +18,14 @@ ENV PYTHONUNBUFFERED=1
 # Set working directory
 WORKDIR /app
 
-# Copy requirements.txt and install Python dependencies
+# Copy requirements.txt
 COPY requirements.txt .
-RUN pip3 install --upgrade pip && pip3 install -r requirements.txt
 
-# Copy the application code into the container
+# Install Python dependencies
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# Copy the application code
 COPY . .
 
 # Verify Java installation
