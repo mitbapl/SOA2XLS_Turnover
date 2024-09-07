@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit immediately if a command exits with a non-zero status
-set -e
+#set -e
 
 # Install OpenJDK 11
 #echo "Installing OpenJDK 11..."
@@ -14,7 +14,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$JAVA_HOME/lib:$LD_LIBRARY_PATH
 
 # Verify Java installation
-java -version
+#java -version
 
 # Continue with your deployment process
 # For example, you might want to install other dependencies or run your application
