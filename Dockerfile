@@ -18,7 +18,7 @@ RUN apt-get update && \
 
 # Set JAVA_HOME environment variable
 ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH /usr/lib/jvm/java-17-openjdk-amd64/bin:/usr/local/bin:/usr/bin:/bin
+ENV PATH $JAVA_HOME/bin:$PATH
 
 # Install Python dependencies
 COPY requirements.txt .
