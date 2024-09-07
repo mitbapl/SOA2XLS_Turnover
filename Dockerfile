@@ -20,6 +20,8 @@ WORKDIR /app
 
 # Copy requirements.txt
 COPY requirements.txt .
+# Copy colors.sh
+COPY scripts/colors.sh ./scripts/
 
 # Install dependencies
 RUN pip install --upgrade pip && \
