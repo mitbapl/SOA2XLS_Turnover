@@ -14,6 +14,6 @@ services:
   buildCommand: |
       echo "Building the Docker image..."
   startCommand: |
-      export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin:/usr/local/bin:/usr/bin:/bin
+      export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
       export PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:/usr/local/bin:/usr/bin:/bin
       gunicorn app:app
