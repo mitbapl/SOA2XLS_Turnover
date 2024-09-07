@@ -1,28 +1,27 @@
-# Use an official OpenJDK image with Python
-FROM openjdk:11-jdk-slim
+# Stage 1: Build the environment
+FROM openjdk:11-jdk-slim as builder
 
-# Set environment variables
+# Install any build dependencies here (if needed)
+# Example: RUN apt-get update && apt-get install -y python3 python3-pip
+
+# Stage 2: Final image
+FROM openjdk:11-jre-slim
+
+# Copy necessary files from the builder stage
+COPY --from=builder /path/to/needed/files /path/in/final/image
+
+# Set up environment variables
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH="$JAVA_HOME/bin:$PATH"
-ENV PYTHONUNBUFFERED=1
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy requirements.txt
-COPY requirements.txt .
-
-# Install Python and pip
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
-    rm -rf /var/lib/apt/lists/*
+# Copy application code
+# COPY . .
 
 # Install Python dependencies
-RUN pip3 install --upgrade pip && \
-    pip3 install -r requirements.txt
-
-# Copy your application code
-# COPY . .
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Start the application
 CMD ["gunicorn", "app:app"]
