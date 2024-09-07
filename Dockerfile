@@ -1,3 +1,5 @@
+sudo apt-get install default-jre
+
 # Use Python's official lightweight image
 FROM python:3.9-slim
 
