@@ -1,16 +1,10 @@
-# First stage: Install OpenJDK
-FROM openjdk:11-jdk-slim as builder
+# Use the official OpenJDK image
+FROM openjdk:11-jre-slim
 
-# Install Python
-RUN apt-get update && apt-get install -y python3 python3-pip && rm -rf /var/lib/apt/lists/*
-
-# Second stage: Use the official Python image
-FROM python:3.11-slim
-
-# Copy Java installation from builder
-COPY --from=builder /usr/lib/jvm/java-11-openjdk-amd64 /usr/lib/jvm/java-11-openjdk-amd64
-COPY --from=builder /usr/bin/java /usr/bin/java
-COPY --from=builder /usr/bin/javac /usr/bin/javac
+# Install Python and pip
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set environment variables
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
@@ -24,8 +18,8 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install Python dependencies
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+RUN pip3 install --upgrade pip && \
+    pip3 install -r requirements.txt
 
 # Copy your application code
 # COPY . .
