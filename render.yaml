@@ -6,10 +6,19 @@ services:
   - type: web
     name: my-flask-app
     env: python
-    pythonVersion: 3.9
+    region: oregon  # Use your preferred region
+    plan: free
     buildCommand: |
       apt-get update && \
+      apt-get install -y build-essential libssl-dev libffi-dev && \
       apt-get install -y openjdk-11-jdk && \
       export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java)))) && \
-      pip install -r requirements.txt
+      python -m pip install --upgrade pip && \
+      python -m pip install -r requirements.txt
     startCommand: gunicorn app:app
+    pythonVersion: 3.9  # Set to Python 3.9 or compatible version
+    envVars:
+      - key: JAVA_HOME
+        value: /usr/lib/jvm/java-11-openjdk-amd64
+      - key: PATH
+        value: $JAVA_HOME/bin:$PATH
