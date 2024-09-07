@@ -1,10 +1,20 @@
-FROM python:3.9
+# Start from a base image that has OpenJDK and Python
+FROM openjdk:11-slim
 
-RUN apt-get update && apt-get install -y openjdk-11-jdk
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-RUN echo "export PATH=$PATH:$JAVA_HOME/bin" >> /root/.bashrc
+# Install Python and other necessary packages
+RUN apt-get update && apt-get install -y python3 python3-pip && rm -rf /var/lib/apt/lists/*
 
+# Set the working directory
 WORKDIR /app
+
+# Copy your application files
 COPY . .
 
-CMD ["python", "app.py"]
+# Install Python dependencies
+RUN pip3 install -r requirements.txt
+
+# Expose the port your application runs on
+EXPOSE 5000
+
+# Command to run your Flask application
+CMD ["python3", "your_flask_app.py"]
