@@ -9,10 +9,10 @@ apt-get update
 apt-get install -y openjdk-11-jdk
 
 # Set JAVA_HOME environment variable
-export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64/bin:/usr/local/bin:/usr/bin:/bin"
 
 # Add Java to the PATH
-export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="/usr/lib/jvm/java-17-openjdk-amd64/bin:/usr/local/bin:/usr/bin:/bin"
 
 # Verify Java installation
 java -version
