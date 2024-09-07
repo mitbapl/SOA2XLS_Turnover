@@ -8,9 +8,11 @@ import math
 import sys
 
 # Install pyimagej and openjdk if not already installed
+# !conda install --yes --prefix {sys.prefix} -c conda-forge pyimagej openjdk=8
 !conda install --yes --prefix {sys.prefix} -c conda-forge pyimagej openjdk=8
 
 # Set the JAVA_HOME environment variable correctly
+# Adjust this path based on where Java is installed in your environment
 os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-8-openjdk-amd64'  # replace with your actual path
 
 app = Flask(__name__)
