@@ -6,6 +6,7 @@ services:
   - type: web
     name: my-flask-app
     env: python
+    pythonVersion: 3.9
     buildCommand: |
       apt-get update && \
       apt-get install -y openjdk-11-jdk && \
