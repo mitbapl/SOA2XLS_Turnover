@@ -14,6 +14,7 @@ RUN apt-get update && \
 # Set environment variables
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH=$JAVA_HOME/bin:$PATH
+ENV PYTHONUNBUFFERED=1
 
 # Set working directory
 WORKDIR /app
