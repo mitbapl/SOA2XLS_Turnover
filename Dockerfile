@@ -1,25 +1,21 @@
 # Use an official Python image
 FROM python:3.11-slim
+# Use a base image with both Python and Java pre-installed
+FROM openjdk:11-slim
 
-# Install Java (for tabula)
-RUN apt-get update && \
-    apt-get install -y openjdk-11-jdk && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Install Python and other dependencies
+RUN apt-get update && apt-get install -y python3 python3-pip
 
-# Set Java environment variables
+# Set environment variables for Java
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-ENV PATH="$JAVA_HOME/bin:$PATH"
+ENV PATH=$JAVA_HOME/bin:$PATH
 
-# Set working directory
+# Copy the application code to the container
 WORKDIR /app
+COPY . /app
 
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+# Install any Python dependencies
+RUN pip3 install -r requirements.txt
 
-# Copy the application code
-COPY . .
-
-# Start the application
-CMD ["python", "app.py"]
+# Set the command to run your app
+CMD ["python3", "app.py"]
