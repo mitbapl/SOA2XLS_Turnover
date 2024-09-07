@@ -1,5 +1,10 @@
 FROM python:3.9
+FROM openjdk:11-jdk-slim
 FROM continuumio/miniconda3
+
+# Install dependencies (if needed)
+RUN if [ -f package.json ]; then npm install; fi
+RUN if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
 # Install mamba
 RUN conda install mamba -c conda-forge
