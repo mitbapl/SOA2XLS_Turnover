@@ -1,30 +1,20 @@
-# Use an appropriate base image
-FROM ubuntu:20.04
+FROM python:3.9
 
-# Set non-interactive mode for apt-get
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Update package list and install OpenJDK and Python
+# Install Java
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk python3 python3-pip && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y openjdk-11-jre
 
-# Set JAVA_HOME and update PATH
-ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH $JAVA_HOME/bin:$PATH
+# Set JAVA_HOME environment variable
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
+ENV PATH $PATH:$JAVA_HOME/bin
 
-# Verify Java installation
-RUN java -version
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-# Set the working directory
+# Copy your application files
+COPY . /app
 WORKDIR /app
 
-# Copy your Python application files to the container
-COPY your_python_script.py /app/
-
-# Install tabula-py and any other dependencies
-RUN pip3 install tabula-py
-
 # Command to run your application
-CMD ["python3", "your_python_script.py"]
+CMD ["python", "app.py"]
