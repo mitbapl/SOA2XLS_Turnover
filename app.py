@@ -24,8 +24,8 @@ def find_java_home():
         return None
 
 app = Flask(__name__)
-#os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-11-openjdk-amd64'
-#os.environ['PATH'] = os.environ['JAVA_HOME'] + '/bin:' + os.environ['PATH']
+os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-17-openjdk-amd64'
+os.environ['PATH'] = os.environ['JAVA_HOME'] + '/bin:' + os.environ['PATH']
 app.config['DEBUG'] = True
 app.config['UPLOAD_FOLDER'] = 'uploads/'  # Folder to store uploaded files
 @app.errorhandler(500)
