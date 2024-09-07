@@ -1,21 +1,32 @@
-# Use an official Python image
-FROM python:3.11-slim
-# Use a base image with both Python and Java pre-installed
-FROM openjdk:11-slim
+# Use an official OpenJDK image with Python
+FROM openjdk:11-jre-slim
 
-# Install Python and other dependencies
-RUN apt-get update && apt-get install -y python3 python3-pip
+# Install Python and essential dependencies
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set environment variables for Java
+# Set environment variables for Java and Python
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-ENV PATH=$JAVA_HOME/bin:$PATH
+ENV PATH="$JAVA_HOME/bin:$PATH"
+ENV PYTHONUNBUFFERED=1
 
-# Copy the application code to the container
+# Set the working directory
 WORKDIR /app
-COPY . /app
 
-# Install any Python dependencies
-RUN pip3 install -r requirements.txt
+# Copy requirements.txt and install Python dependencies
+COPY requirements.txt .
+RUN pip3 install --upgrade pip && \
+    pip3 install -r requirements.txt
 
-# Set the command to run your app
-CMD ["python3", "app.py"]
+# Copy the entire application code into the container
+COPY . .
+
+# Verify Java installation
+RUN java -version
+
+# Expose the port the app runs on (default for gunicorn is 8000)
+EXPOSE 8000
+
+# Start the application using gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
