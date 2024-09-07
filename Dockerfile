@@ -1,5 +1,10 @@
-# Use an official OpenJDK image with Python
+# Use an official OpenJDK image
 FROM openjdk:11-jre-slim
+
+# Install Python
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set environment variables for Java
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
@@ -11,12 +16,9 @@ WORKDIR /app
 
 # Copy requirements.txt and install Python dependencies
 COPY requirements.txt .
-RUN apt-get update && apt-get install -y python3 python3-pip && rm -rf /var/lib/apt/lists/*
-
-# Install Python dependencies
 RUN pip3 install --upgrade pip && pip3 install -r requirements.txt
 
-# Copy your application code
+# Copy the application code into the container
 COPY . .
 
 # Verify Java installation
