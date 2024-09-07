@@ -1,8 +1,7 @@
-Flask
+Flask 
 pandas
 numpy==1.24.4  # Use a compatible version
-tabula-py  # Correct package name
+tabula-py==2.3.0
 gunicorn>=19.7.1
 JPype1>=0.8.0
-requests==2.28.1 
-tabula-py==2.3.0
+requests==2.28.1
