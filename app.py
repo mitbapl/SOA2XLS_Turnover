@@ -5,23 +5,6 @@ import tabula
 from tabula import read_pdf
 import os
 import math
-import subprocess
-
-def find_java_home():
-    # Check if 'java' command exists in PATH
-    try:
-        # Run 'java -XshowSettings:properties -version' to get Java properties
-        result = subprocess.run(['java', '-XshowSettings:properties', '-version'],
-                                stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-        print(result)
-        # Check if JAVA_HOME is mentioned in the output
-        output = result.stderr
-        for line in output.splitlines():
-            if 'java.home' in line:
-                java_home = line.split('=')[1].strip()
-                return java_home
-    except FileNotFoundError:
-        return None
 
 app = Flask(__name__)
 os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-17-openjdk-amd64'
@@ -51,15 +34,8 @@ def isnan(value):
 
 # HDFC Processing Function
 def process_hdfc(f):
-    # Try to find JAVA_HOME
-    java_home = find_java_home()
-
-    if java_home:
-        print(f"JAVA_HOME is set to: {java_home}")
-    else:
-        print("JAVA_HOME could not be found. Java might not be installed.")
-    #print(os.environ['JAVA_HOME'])
-    #print(os.environ['PATH'])
+    print(os.environ['JAVA_HOME'])
+    print(os.environ['PATH'])
     try:
         pars = tabula.read_pdf(f,                                            
                                pages='all',
