@@ -1,43 +1,24 @@
-# Use an official Python runtime as a parent image
-FROM python:3.10
+FROM python:3.11-slim
 
-# Set the working directory in the container
-WORKDIR /app
+# Install necessary system packages
+RUN apt-get update && \
+    apt-get install -y build-essential libssl-dev libffi-dev openjdk-11-jdk && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy the current directory contents into the container at /app
-COPY . /app
-
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Make port 5000 available to the world outside this container
-EXPOSE 5000
-
-# Define environment variable
-ENV FLASK_APP=app.py
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
-
-# Install Java (OpenJDK 11)
-RUN apt-get update && apt-get install -y openjdk-11-jdk
-
-# Set JAVA_HOME environment variable
+# Set JAVA_HOME
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy requirements file and install dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install jpype1 && \
+    pip install -r requirements.txt
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy the rest of your application code
+COPY . .
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
-
-# Define environment variable
-ENV NAME World
-
-# Run app.py when the container launches
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
+# Command to run your app (adjust as necessary)
+CMD ["python", "your_app.py"]
