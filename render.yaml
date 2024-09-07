@@ -12,11 +12,15 @@ services:
     buildCommand: |
       apt-get update && \
       apt-get install -y openjdk-11-jre && \
+      java -version && \
       export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java)))) && \
       python -m pip install --upgrade pip && \
       python -m pip install -r requirements.txt
     startCommand: |
-      java -version && python app.py  # Replace with your actual Flask app filename
+      export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 && \
+      export PATH=$JAVA_HOME/bin:$PATH && \
+      java -version && \
+      python app.py  # Replace with your actual Flask app filename
     pythonVersion: 3.10  # Change to Python 3.10 or 3.9
     envVars:
       - key: JAVA_HOME
