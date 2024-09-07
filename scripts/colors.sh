@@ -1,23 +1,23 @@
 #!/bin/bash
 
-# Define color codes
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-WHITE='\033[0;37m'
-NC='\033[0m' # No Color
-
-# Function to print text in color
-print_in_color() {
-    local color=$1
-    shift
-    echo -e "${color}$@${NC}"
-}
+# Check if tput is available
+if command -v tput &> /dev/null; then
+    # Define colors using tput
+    RED=$(tput setaf 1)
+    GREEN=$(tput setaf 2)
+    YELLOW=$(tput setaf 3)
+    BLUE=$(tput setaf 4)
+    RESET=$(tput sgr0)
+else
+    # Fallback colors (no colors)
+    RED=""
+    GREEN=""
+    YELLOW=""
+    BLUE=""
+    RESET=""
+fi
 
 # Example usage
-# Uncomment the following lines to test the script
-# print_in_color $GREEN "This is green text."
-# print_in_color $RED "This is red text."
+echo "${GREEN}This is a green message${RESET}"
+echo "${RED}This is a red message${RESET}"
+echo "This message has no color."
