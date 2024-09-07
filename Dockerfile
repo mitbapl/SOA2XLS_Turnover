@@ -26,5 +26,5 @@ COPY . .
 # Verify Java installation
 RUN java -version
 
-# Start the application
-CMD ["gunicorn", "app:app"]
+# Start the application with Gunicorn
+CMD ["gunicorn", "app:app"]  # Replace "app:app" with your actual module and application name if needed
