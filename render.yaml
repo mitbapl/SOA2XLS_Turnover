@@ -11,6 +11,7 @@ services:
     buildCommand: |
       apt-get update && \
       apt-get install -y build-essential libssl-dev libffi-dev openjdk-11-jdk && \
+      apt-get update && apt-get install -y openjdk-11-jre
       export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java)))) && \
       python -m pip install --upgrade pip && \
       python -m pip install -r requirements.txt
