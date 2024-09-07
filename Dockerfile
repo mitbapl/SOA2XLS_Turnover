@@ -1,20 +1,30 @@
-# Use the official OpenJDK image as a base
-FROM openjdk:11-jre-slim
+# Use Python's official lightweight image
+FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the current directory contents into the container
+# Install dependencies for downloading and running Java
+RUN apt-get update && apt-get install -y wget unzip
+
+# Manually download and install OpenJDK
+RUN wget https://download.java.net/openjdk/jdk17/ri/openjdk-17+35_linux-x64_bin.tar.gz \
+    && mkdir -p /usr/lib/jvm \
+    && tar -xvzf openjdk-17+35_linux-x64_bin.tar.gz -C /usr/lib/jvm \
+    && rm openjdk-17+35_linux-x64_bin.tar.gz
+
+# Set JAVA_HOME and update PATH environment variables
+ENV JAVA_HOME=/usr/lib/jvm/jdk-17
+ENV PATH="$JAVA_HOME/bin:$PATH"
+
+# Copy your application code into the container
 COPY . .
 
-# Install Python and pip
-RUN apt-get update && apt-get install -y python3 python3-pip && rm -rf /var/lib/apt/lists/*
-
 # Install Python dependencies
-RUN pip3 install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port the app runs on
+# Expose the port your Flask app will use
 EXPOSE 5000
 
-# Command to run the application
+# Command to run the Flask app using Gunicorn
 CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5000"]
