@@ -1,4 +1,4 @@
-# Use an appropriate base image
+# Use a suitable base image
 FROM ubuntu:20.04
 
 # Set non-interactive mode for apt-get
@@ -23,7 +23,7 @@ WORKDIR /app
 # Copy your Python application files to the container
 COPY your_python_script.py /app/
 
-# Install tabula-py (or other dependencies)
+# Install tabula-py and any other dependencies
 RUN pip3 install tabula-py
 
 # Command to run your application
