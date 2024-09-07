@@ -1,32 +1,36 @@
-sudo apt-get install default-jre
+# Stage 1: Build the Java project
+FROM maven:3.8.2-jdk-17 AS build
 
-# Use Python's official lightweight image
-FROM python:3.9-slim
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# Install dependencies for downloading and running Java
-RUN apt-get update && apt-get install -y wget unzip
-
-# Manually download and install OpenJDK
-RUN wget https://download.java.net/openjdk/jdk17/ri/openjdk-17+35_linux-x64_bin.tar.gz \
-    && mkdir -p /usr/lib/jvm \
-    && tar -xvzf openjdk-17+35_linux-x64_bin.tar.gz -C /usr/lib/jvm \
-    && rm openjdk-17+35_linux-x64_bin.tar.gz
-
-# Set JAVA_HOME and update PATH environment variables
-ENV JAVA_HOME=/usr/lib/jvm/jdk-17
-ENV PATH="$JAVA_HOME/bin:$PATH"
-
-# Copy your application code into the container
+# Copy your Java project files
 COPY . .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Build the project
+RUN mvn clean package -Pprod -DskipTests
 
-# Expose the port your Flask app will use
-EXPOSE 5000
+# Stage 2: Set up the runtime environment
+FROM openjdk:17-jdk-slim
 
-# Command to run the Flask app using Gunicorn
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5000"]
+# Set the environment variables for Java
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk
+ENV PATH $JAVA_HOME/bin:$PATH
+
+# Install Python and pip (necessary for tabula-py)
+RUN apt-get update && apt-get install -y python3 python3-pip
+
+# Install tabula-py Python library
+RUN pip3 install tabula-py
+
+# Copy the application JAR from the build stage
+COPY --from=build /target/your-app.jar /app/your-app.jar
+
+# Copy your Python application if needed (tabula integration)
+COPY your_python_script.py /app/
+
+# Set the working directory
+WORKDIR /app
+
+# Expose necessary ports
+EXPOSE 8080
+
+# Command to run your Java application
+CMD ["java", "-jar", "your-app.jar"]
