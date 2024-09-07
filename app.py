@@ -13,6 +13,7 @@ def find_java_home():
         # Run 'java -XshowSettings:properties -version' to get Java properties
         result = subprocess.run(['java', '-XshowSettings:properties', '-version'],
                                 stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+        print(result)
         # Check if JAVA_HOME is mentioned in the output
         output = result.stderr
         for line in output.splitlines():
