@@ -16,7 +16,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 # Verify Java installation
 #java -version
 export LD_LIBRARY_PATH=/usr/lib/jvm/java-8-oracle/jre/lib/amd64/server
-# sudo R CMD javareconf
+sudo R CMD javareconf
 # Continue with your deployment process
 # For example, you might want to install other dependencies or run your application
 # npm install or pip install -r requirements.txt
