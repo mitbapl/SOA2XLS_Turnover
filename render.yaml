@@ -2,6 +2,7 @@ build:
   commands:
     - sudo apt-get update
     - sudo apt-get install -y openjdk-11-jdk
+
 services:
   - type: web
     name: SOA2XLS_Turnover
@@ -10,12 +11,12 @@ services:
     plan: free
     buildCommand: |
       apt-get update && \
-      apt-get update && apt-get install -y openjdk-11-jre
+      apt-get install -y openjdk-11-jre && \
       export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java)))) && \
       python -m pip install --upgrade pip && \
       python -m pip install -r requirements.txt
     startCommand: |
-  java -version && python app.py  # Replace with your actual Flask app filename
+      java -version && python app.py  # Replace with your actual Flask app filename
     pythonVersion: 3.10  # Change to Python 3.10 or 3.9
     envVars:
       - key: JAVA_HOME
