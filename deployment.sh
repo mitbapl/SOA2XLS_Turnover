@@ -12,7 +12,7 @@ apt-get install -y openjdk-11-jdk
 export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 
 # Add Java to the PATH
-export PATH="/usr/lib/jvm/java-17-openjdk-amd64/bin:/usr/local/bin:/usr/bin:/bin"
+export PATH=$JAVA_HOME+"/bin:"+$PATH
 
 # Verify Java installation
 java -version
