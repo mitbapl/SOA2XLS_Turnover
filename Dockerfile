@@ -1,14 +1,15 @@
 # Use the official Python image
 FROM python:3.11
-FROM python:3.11
 
 # Install necessary packages
 RUN apt-get update && \
-    apt-get install -y ncurses-bin \ 
+    apt-get install -y ncurses-bin \
     build-essential \
     libssl-dev \
     libffi-dev \
-    openjdk-11-jdk
+    openjdk-11-jdk && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set environment variables
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
