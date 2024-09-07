@@ -4,7 +4,7 @@ build:
     - sudo apt-get install -y openjdk-11-jdk
 services:
   - type: web
-    name: my-flask-app
+    name: SOA2XLS_Turnover
     env: python
     region: oregon  # Use your preferred region
     plan: free
