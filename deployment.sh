@@ -8,11 +8,11 @@ echo "Installing OpenJDK 11..."
 USER root
 # RUN commands
 USER 1001
-apt-get update
+#apt-get update
 #apt-get install -y openjdk-11-jdk
 
 # Set JAVA_HOME environment variable
-export JAVA_HOME=/opt/homebrew/opt/openjdk/libexec/openjdk.jdk
+export JAVA_HOME=/usr/lib/jvm/default-java
 export PATH=$JAVA_HOME/bin:$PATH
 # export LD_LIBRARY_PATH=$JAVA_HOME/lib:$LD_LIBRARY_PATH
 # export LD_LIBRARY_PATH=/usr/lib/jvm/java-8-openjdk-amd64/lib/server
