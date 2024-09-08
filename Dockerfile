@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get install -y openjdk-8-jdk
 
 # Set JAVA_HOME environment variable
-ENV JAVA_HOME /usr/lib/jvm/default-java
+ENV JAVA_HOME /usr/local/openjdk-8
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Install Python dependencies
