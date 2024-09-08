@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import tabula
 from tabula import read_pdf
-# import os
+import os
 import math
 
 app = Flask(__name__)
