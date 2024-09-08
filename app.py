@@ -10,7 +10,7 @@ app = Flask(__name__)
 # Set the JAVA_HOME environment variable to the Java installation directory
 os.environ["JAVA_HOME"] = '/opt/homebrew/opt/openjdk/libexec/openjdk.jdk'
 # os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so'
-os.environ['PATH'] = os.environ['JAVA_HOME'] + '/bin:' + os.environ['PATH']
+#os.environ['PATH'] = os.environ['JAVA_HOME'] + '/bin:' + os.environ['PATH']
 app.config['DEBUG'] = True
 app.config['UPLOAD_FOLDER'] = 'uploads/'  # Folder to store uploaded files
 @app.errorhandler(500)
@@ -37,7 +37,7 @@ def isnan(value):
 # HDFC Processing Function
 def process_hdfc(f):
     print(os.environ['JAVA_HOME'])
-    print(os.environ['PATH'])
+    #print(os.environ['PATH'])
     try:
         pars = tabula.read_pdf(f,                                            
                                pages='all',
