@@ -22,7 +22,7 @@ RUN apt-get update && \
     apt-get install -y openjdk-11-jdk
 
 # Set JAVA_HOME environment variable
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so
+ENV JAVA_HOME /opt/homebrew/opt/openjdk/libexec/openjdk.jdk
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Install Python dependencies
