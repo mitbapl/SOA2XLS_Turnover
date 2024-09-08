@@ -22,7 +22,7 @@ WORKDIR /app
 
 # Verify Java installation and libjvm.so presence
 RUN java -version
-RUN find $JAVA_HOME -name "libjvm.so" || (echo "libjvm.so not found" && exit 1)
-
+RUN apt-get update && \
+    find $JAVA_HOME -name "libjvm.so" || (echo "libjvm.so not found" && exit 1)
 # Start the Python application
 CMD ["python", "app.py"]
