@@ -317,8 +317,8 @@ def upload_file():
                 output_file = os.path.join(app.config['UPLOAD_FOLDER'], 'processed_hdfc.xlsx')
 
                 # Adding your name to the last row as an author
-                author_row = pd.DataFrame({"Author": ["Prashant L. Mitba"]})  # Create a DataFrame for the author
-                df = pd.concat([df, author_row], ignore_index=True)  # Append the author DataFrame
+                # author_row = pd.DataFrame({"Author": ["Prashant L. Mitba"]})  # Create a DataFrame for the author
+                # df = pd.concat([df, author_row], ignore_index=True)  # Append the author DataFrame
                 # Save both DataFrames to the same Excel file, each in a separate sheet
                 with pd.ExcelWriter(output_file) as writer:
                     df_statement.to_excel(writer, sheet_name='Statement Data', index=False)
