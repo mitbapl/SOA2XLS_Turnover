@@ -3,7 +3,7 @@ FROM python:3.9-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
 # Set the working directory in the container
 WORKDIR /app
@@ -15,9 +15,9 @@ COPY . /app
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Java (required by Tabula)
+# Install Java (OpenJDK 11) for Tabula
 RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk && \
+    apt-get install -y openjdk-17-jdk && \
     apt-get clean
 
 # Expose the port the app runs on
