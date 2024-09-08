@@ -1,5 +1,5 @@
 FROM python:3.9
-FROM openjdk:11-jdk-slim
+FROM openjdk:8-jdk-slim
 FROM continuumio/miniconda3
 
 # Install dependencies (if needed)
@@ -22,7 +22,7 @@ RUN apt-get update && \
     apt-get install -y openjdk-11-jdk
 
 # Set JAVA_HOME environment variable
-ENV JAVA_HOME /opt/homebrew/opt/openjdk/libexec/openjdk.jdk
+ENV JAVA_HOME /usr/lib/jvm
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Install Python dependencies
