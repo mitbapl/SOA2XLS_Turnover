@@ -27,4 +27,4 @@ EXPOSE 5000
 RUN mkdir -p /app/uploads
 
 # Run the application
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "--timeout", "120", "--workers", "3", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "--timeout", "1200", "--workers", "3", "app:app"]
