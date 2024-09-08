@@ -6,7 +6,7 @@
 # Install OpenJDK 11
 echo "Installing OpenJDK 11..."
 which java
-
+java -version
 USER root
 # RUN commands
 #USER 1001
