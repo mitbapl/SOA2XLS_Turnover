@@ -5,6 +5,9 @@
 
 # Install OpenJDK 11
 echo "Installing OpenJDK 11..."
+USER root
+# RUN commands
+USER 1001
 apt-get update
 #apt-get install -y openjdk-11-jdk
 
