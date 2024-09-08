@@ -4,8 +4,8 @@
 #set -e
 
 # Install OpenJDK 11
-#echo "Installing OpenJDK 11..."
-#apt-get update
+echo "Installing OpenJDK 11..."
+apt-get update
 #apt-get install -y openjdk-11-jdk
 
 # Set JAVA_HOME environment variable
