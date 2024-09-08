@@ -9,7 +9,7 @@
 #apt-get install -y openjdk-11-jdk
 
 # Set JAVA_HOME environment variable
-export JAVA_HOME= /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so
+export JAVA_HOME=/opt/homebrew/opt/openjdk/libexec/openjdk.jdk
 export PATH=$JAVA_HOME/bin:$PATH
 # export LD_LIBRARY_PATH=$JAVA_HOME/lib:$LD_LIBRARY_PATH
 # export LD_LIBRARY_PATH=/usr/lib/jvm/java-8-openjdk-amd64/lib/server
