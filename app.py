@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import tabula
 from tabula import read_pdf
-import os
+# import os
 import math
 
 app = Flask(__name__)
@@ -36,7 +36,7 @@ def isnan(value):
 
 # HDFC Processing Function
 def process_hdfc(f):
-    print(os.environ['JAVA_HOME'])
+    # print(os.environ['JAVA_HOME'])
     #print(os.environ['PATH'])
     try:
         pars = tabula.read_pdf(f,                                            
