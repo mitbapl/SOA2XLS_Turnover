@@ -4,12 +4,14 @@ FROM openjdk:8-jdk-slim
 # Clone the OpenJDK repository
 RUN git clone https://github.com/openjdk/jdk.git /jdk
 
-# Install JDK
-RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk
+# Install Java (Tabula requires Java)
+RUN apt-get update && apt-get install -y \
+    default-jdk \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set JAVA_HOME environment variable
-ENV JAVA_HOME /usr/local/openjdk-8
+ENV JAVA_HOME /usr/lib/jvm/default-java
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Install Python dependencies
