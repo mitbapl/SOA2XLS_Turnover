@@ -359,3 +359,8 @@ def upload_file():
                 return "Error in processing the file"
 
     return redirect(url_for('index'))
+    
+if __name__ == '__main__':
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
+    app.run(host='0.0.0.0', port=5000)
