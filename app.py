@@ -307,6 +307,22 @@ def get_bounced_transactions(df, narr_col):
     
     return df_bounced
 
+# Define function to safely convert columns to numeric
+def safe_numeric_conversion(df, columns):
+    for col in columns:
+        if col in df.columns:  # Ensure column exists
+            df[col] = pd.to_numeric(df[col], errors='coerce')  # Convert invalid entries to NaN
+    return df
+
+# Define function to filter bounced transactions
+def get_bounced_transactions(df, narr_col):
+    bounce_keywords = ['bounced', 'returned', 'dishonored', 'nach', 'ecs', 'ach']
+    df_bounced = df[
+        df[narr_col].str.contains('|'.join(bounce_keywords), case=False, na=False)
+        & ~df[narr_col].str.contains('upi', case=False, na=False)
+    ]
+    return df_bounced
+
 # Repeated Transactions Function
 def get_repeated_transactions(df, narr_col):
     repeated_keywords = ['emi', 'rent', 'utility', 'insurance', 'creditor', 'debtor', 'nach', 'ecs', 'ach']
@@ -345,6 +361,11 @@ def upload_file():
                 bal_col = 'Balance'
                 wdl_col = 'Debits'
                 dep_col = 'Credits'
+                # Preprocess the data
+                df_statement.columns = ['Date', 'Narration', 'Reference', 'Value Date', 'Debit', 'Credit', 'Balance']  # Adjust column names as per your data
+                df_statement = df_statement.fillna('')  # Handle missing values
+                numeric_columns = ['Debit', 'Credit', 'Balance']
+                df_statement = safe_numeric_conversion(df_statement, numeric_columns)  # Safely convert to numeric
 
                 # Apply updated bounce function
                 df_bounced = get_bounced_transactions(df_statement, narr_col)
