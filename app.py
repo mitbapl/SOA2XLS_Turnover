@@ -295,15 +295,18 @@ def process_hdfc(f):
         print("Error:", e)
         return None, None
 
-# Bounced Transactions Function
+# Bounced Transactions Function (with UPI excluded)
 def get_bounced_transactions(df, narr_col):
-    bounce_keywords = ['bounced', 'returned', 'dishonored', 'nach', 'ecs', 'ach']
-    df_bounced = df[df[narr_col].str.contains('|'.join(bounce_keywords), case=False, na=False)]
+    bounce_keywords = ['bounced', 'returned', 'dishonored']
+    df_bounced = df[
+        df[narr_col].str.contains('|'.join(bounce_keywords), case=False, na=False)
+        & ~df[narr_col].str.contains('upi', case=False, na=False)
+    ]
     return df_bounced
 
 # Repeated Transactions Function
 def get_repeated_transactions(df, narr_col):
-    repeated_keywords = ['emi', 'rent', 'utility', 'insurance', 'creditor', 'debtor']
+    repeated_keywords = ['emi', 'rent', 'utility', 'insurance', 'creditor', 'debtor', 'nach', 'ecs', 'ach']
     df_repeated = df[df[narr_col].str.contains('|'.join(repeated_keywords), case=False, na=False)]
     return df_repeated
 
@@ -329,7 +332,6 @@ def upload_file():
         if file:
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(file_path)
-            print(file_path)
 
             # Process the file
             df_statement, df_turnover = process_hdfc(file_path)
@@ -341,6 +343,7 @@ def upload_file():
                 wdl_col = 'Debits'
                 dep_col = 'Credits'
 
+                # Apply updated bounce function
                 df_bounced = get_bounced_transactions(df_statement, narr_col)
                 df_repeated = get_repeated_transactions(df_statement, narr_col)
                 df_above_avg = get_above_average_transactions(df_statement, bal_col, wdl_col, dep_col)
@@ -355,6 +358,7 @@ def upload_file():
                     df_above_avg.to_excel(writer, sheet_name='Above Avg Transactions', index=False)
 
                 return send_file(output_file, as_attachment=True)
+
             else:
                 return "Error in processing the file"
 
