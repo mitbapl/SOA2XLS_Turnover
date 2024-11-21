@@ -296,11 +296,14 @@ def process_hdfc(f):
         return None, None
 
 # Function to safely convert columns to numeric
-def safe_numeric_conversion(df, columns):
-    try:
-        df[col] = pd.to_numeric(df[col], errors='coerce')  # Use 'coerce' to handle invalid values
-    except Exception as e:
-        print(f"Error converting column {col}: {e}")
+def safe_numeric_conversion(df, c):
+    # Example conversion
+    for c in df.columns:
+        try:
+            df[c] = pd.to_numeric(df[c])
+        except ValueError:
+        # Handle the error, e.g., keep the column as is or log the error
+            print(f"Could not convert column {c} to numeric.")
     return df
 
 # Function to filter bounced transactions
@@ -349,7 +352,7 @@ def upload_file():
                 df_cns = df_statement
 
                 # Convert 'Debit' column to numeric
-                df_cns = convert_to_numeric_safe(df_cns, 'Debits')
+                df_cns = safe_numeric_conversion(df_cns, 'Debits')
 
                 # Extract bounced, repeated, and above average transactions
                 narr_col = 'Narration'  # Adjust based on your processed DataFrame
