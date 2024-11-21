@@ -295,26 +295,15 @@ def process_hdfc(f):
         print("Error:", e)
         return None, None
 
-# Bounced Transactions Function (with UPI excluded)
-def get_bounced_transactions(df, narr_col):
-    bounce_keywords = ['bounced', 'returned', 'dishonored']
-    
-    # Apply filter for bounced transactions, excluding UPI-related ones
-    df_bounced = df[
-        df[narr_col].str.contains('|'.join(bounce_keywords), case=False, na=False)
-        & ~df[narr_col].str.contains('upi', case=False, na=False)
-    ]
-    
-    return df_bounced
-
-# Define function to safely convert columns to numeric
+# Function to safely convert columns to numeric
 def safe_numeric_conversion(df, columns):
     for col in columns:
-        if col in df.columns:  # Ensure column exists
-            df[col] = pd.to_numeric(df[col], errors='coerce')  # Convert invalid entries to NaN
+        if col in df.columns:
+            # Coerce invalid entries to NaN
+            df[col] = pd.to_numeric(df[col], errors='coerce')  
     return df
 
-# Define function to filter bounced transactions
+# Function to filter bounced transactions
 def get_bounced_transactions(df, narr_col):
     bounce_keywords = ['bounced', 'returned', 'dishonored', 'nach', 'ecs', 'ach']
     df_bounced = df[
@@ -323,23 +312,22 @@ def get_bounced_transactions(df, narr_col):
     ]
     return df_bounced
 
-# Repeated Transactions Function
+# Function to filter repeated transactions
 def get_repeated_transactions(df, narr_col):
     repeated_keywords = ['emi', 'rent', 'utility', 'insurance', 'creditor', 'debtor', 'nach', 'ecs', 'ach']
     df_repeated = df[df[narr_col].str.contains('|'.join(repeated_keywords), case=False, na=False)]
     return df_repeated
 
-# Above Average Transactions Function
+# Function to filter above average transactions
 def get_above_average_transactions(df, bal_col, wdl_col, dep_col):
     avg_balance = df[bal_col].mean()
     df_above_avg = df[(df[wdl_col] > avg_balance) | (df[dep_col] > avg_balance)]
     return df_above_avg
-    
+
 @app.route('/')
 def index():
     return render_template('/Index.html')
 
-# Updated Upload Route
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
@@ -356,18 +344,17 @@ def upload_file():
             df_statement, df_turnover = process_hdfc(file_path)
 
             if df_statement is not None:
+                # Apply numeric conversion to necessary columns
+                numeric_columns = ['Debit', 'Credit', 'Balance']  # Adjust column names as per your data
+                df_statement = safe_numeric_conversion(df_statement, numeric_columns)
+
                 # Extract bounced, repeated, and above average transactions
                 narr_col = 'Narration'  # Adjust based on your processed DataFrame
                 bal_col = 'Balance'
                 wdl_col = 'Debits'
                 dep_col = 'Credits'
-                # Preprocess the data
-                df_statement.columns = ['Date', 'Narration', 'Reference', 'Value Date', 'Debit', 'Credit', 'Balance']  # Adjust column names as per your data
-                df_statement = df_statement.fillna('')  # Handle missing values
-                numeric_columns = ['Debit', 'Credit', 'Balance']
-                df_statement = safe_numeric_conversion(df_statement, numeric_columns)  # Safely convert to numeric
 
-                # Apply updated bounce function
+                # Apply the filter functions
                 df_bounced = get_bounced_transactions(df_statement, narr_col)
                 df_repeated = get_repeated_transactions(df_statement, narr_col)
                 df_above_avg = get_above_average_transactions(df_statement, bal_col, wdl_col, dep_col)
@@ -389,6 +376,4 @@ def upload_file():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    import os
-    port = int(os.environ.get('PORT', 10000))  # Use Render's specified port or fallback to 10000
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=10000)  # Adjust port as necessary
