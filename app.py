@@ -345,13 +345,11 @@ def upload_file():
 
             if df_statement is not None:
                 # Apply numeric conversion to necessary columns
-                # numeric_columns = ['Debit', 'Credit', 'Balance']  # Adjust column names as per your data
-                # df_statement = safe_numeric_conversion(df_statement, numeric_columns)
-                # Clean and preprocess data
-                df.columns = ["Xns Date", "Cheque No", "Narration", "Debits", "Credits", "Balance"]
-                df = df.fillna('')  # Handle missing values
-                df['Narration'] = df['Narration'].astype(str)
+                # Create DataFrame
+                df_cns = df_statement
 
+                # Convert 'Debit' column to numeric
+                df_cns = convert_to_numeric_safe(df_cns, 'Debits')
 
                 # Extract bounced, repeated, and above average transactions
                 narr_col = 'Narration'  # Adjust based on your processed DataFrame
@@ -360,7 +358,7 @@ def upload_file():
                 dep_col = 'Credits'
 
                 # Apply the filter functions
-                df_bounced = get_bounced_transactions(df_statement, narr_col)
+                df_bounced = get_bounced_transactions(df_cns, narr_col)
                 df_repeated = get_repeated_transactions(df_statement, narr_col)
                 df_above_avg = get_above_average_transactions(df_statement, bal_col, wdl_col, dep_col)
 
