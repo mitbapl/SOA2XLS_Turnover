@@ -297,15 +297,15 @@ def process_hdfc(f):
 
 # Function to safely convert columns to numeric
 def safe_numeric_conversion(df, columns):
-    for col in columns:
-        if col in df.columns:
-            # Coerce invalid entries to NaN
-            df[col] = pd.to_numeric(df[col], errors='coerce')  
+    try:
+        df[col] = pd.to_numeric(df[col], errors='coerce')  # Use 'coerce' to handle invalid values
+    except Exception as e:
+        print(f"Error converting column {col}: {e}")
     return df
 
 # Function to filter bounced transactions
 def get_bounced_transactions(df, narr_col):
-    bounce_keywords = ['bounced', 'returned', 'dishonored', 'nach', 'ecs', 'ach']
+    bounce_keywords = ['bounced', 'returned', 'dishonored']
     df_bounced = df[
         df[narr_col].str.contains('|'.join(bounce_keywords), case=False, na=False)
         & ~df[narr_col].str.contains('upi', case=False, na=False)
@@ -347,6 +347,11 @@ def upload_file():
                 # Apply numeric conversion to necessary columns
                 numeric_columns = ['Debit', 'Credit', 'Balance']  # Adjust column names as per your data
                 df_statement = safe_numeric_conversion(df_statement, numeric_columns)
+                # Clean and preprocess data
+                df.columns = ["Xns Date", "Cheque No", "Narration", "Debits", "Credits", "Balance"]
+                df = df.fillna('')  # Handle missing values
+                df['Narration'] = df['Narration'].astype(str)
+
 
                 # Extract bounced, repeated, and above average transactions
                 narr_col = 'Narration'  # Adjust based on your processed DataFrame
