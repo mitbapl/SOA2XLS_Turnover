@@ -311,8 +311,13 @@ def get_bounced_transactions(df, narr_col):
 
 # Assuming you have a column to convert to numeric
 def convert_to_numeric_safe(df, col):
-    # Use 'coerce' to convert invalid values to NaN
-    df[col] = pd.to_numeric(df[col], errors='coerce')
+    """
+    Safely converts a DataFrame column to numeric, replacing non-numeric values with NaN.
+    """
+    try:
+        df[col] = pd.to_numeric(df[col], errors='coerce')  # Convert invalid entries to NaN
+    except Exception as e:
+        print(f"Error converting column {col}: {e}")
     return df
 
 # Repeated Transactions Function
