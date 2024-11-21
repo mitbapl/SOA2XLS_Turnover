@@ -5,6 +5,8 @@ import tabula
 from tabula import read_pdf
 import os
 import math
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning, module="tabula")
 
 app = Flask(__name__)
 # Set the JAVA_HOME environment variable to the Java installation directory
