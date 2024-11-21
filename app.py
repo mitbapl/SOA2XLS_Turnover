@@ -345,8 +345,8 @@ def upload_file():
 
             if df_statement is not None:
                 # Apply numeric conversion to necessary columns
-                numeric_columns = ['Debit', 'Credit', 'Balance']  # Adjust column names as per your data
-                df_statement = safe_numeric_conversion(df_statement, numeric_columns)
+                # numeric_columns = ['Debit', 'Credit', 'Balance']  # Adjust column names as per your data
+                # df_statement = safe_numeric_conversion(df_statement, numeric_columns)
                 # Clean and preprocess data
                 df.columns = ["Xns Date", "Cheque No", "Narration", "Debits", "Credits", "Balance"]
                 df = df.fillna('')  # Handle missing values
