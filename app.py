@@ -312,6 +312,10 @@ def get_above_average_transactions(df, bal_col, wdl_col, dep_col):
     avg_balance = df[bal_col].mean()
     df_above_avg = df[(df[wdl_col] > avg_balance) | (df[dep_col] > avg_balance)]
     return df_above_avg
+    
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 # Updated Upload Route
 @app.route('/upload', methods=['POST'])
