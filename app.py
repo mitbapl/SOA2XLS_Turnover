@@ -315,7 +315,7 @@ def get_above_average_transactions(df, bal_col, wdl_col, dep_col):
     
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('/index.html')
 
 # Updated Upload Route
 @app.route('/upload', methods=['POST'])
