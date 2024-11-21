@@ -296,8 +296,6 @@ def process_hdfc(f):
         return None, None
 
 # Bounced Transactions Function (with UPI excluded)
-import pandas as pd
-
 def get_bounced_transactions(df, narr_col):
     bounce_keywords = ['bounced', 'returned', 'dishonored']
     
@@ -308,17 +306,6 @@ def get_bounced_transactions(df, narr_col):
     ]
     
     return df_bounced
-
-# Assuming you have a column to convert to numeric
-def convert_to_numeric_safe(df, col):
-    """
-    Safely converts a DataFrame column to numeric, replacing non-numeric values with NaN.
-    """
-    try:
-        df[col] = pd.to_numeric(df[col], errors='coerce')  # Convert invalid entries to NaN
-    except Exception as e:
-        print(f"Error converting column {col}: {e}")
-    return df
 
 # Repeated Transactions Function
 def get_repeated_transactions(df, narr_col):
