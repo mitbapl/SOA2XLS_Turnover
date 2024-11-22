@@ -300,39 +300,11 @@ def process_hdfc(f):
         print("Error:", e)
         return None, None
 
+# Bounced Transactions Function
 def get_bounced_transactions(df, narr_col):
-    try:
-        # Validate the column exists
-        if narr_col not in df.columns:
-            print(f"Column '{narr_col}' not found in DataFrame!")
-            return pd.DataFrame()  # Return empty DataFrame
-        
-        # Check if the column contains valid data
-        if df[narr_col].isnull().all():
-            print(f"Column '{narr_col}' contains all null values!")
-            return pd.DataFrame()  # Return empty DataFrame
-
-        # Ensure the column is treated as a string
-        df[narr_col] = df[narr_col].astype(str)
-
-        # Keywords to match bounced transactions
-        bounce_keywords = ['bounced', 'returned', 'dishonored', 'return', 'charge', 'bounce']
-        print("Filtering for bounce-related keywords...")
-
-        # Filter rows where the narration matches any of the keywords
-        df_bounced = df[
-            df[narr_col].str.contains('|'.join(bounce_keywords), case=False, na=False)
-        ]
-
-        # Debugging: Print results for verification
-        print(f"Found {len(df_bounced)} bounced transactions.")
-        print(df_bounced.head())  # Preview the bounced transactions
-
-        return df_bounced
-    except Exception as e:
-        print(f"Error in get_bounced_transactions: {e}")
-        return pd.DataFrame()  # Return empty DataFrame on failure
-
+    bounce_keywords = ['bounced', 'returned', 'dishonored', 'nach', 'ecs', 'ach', 'return']
+    df_bounced = df[df[narr_col].str.contains('|'.join(bounce_keywords), case=False, na=False)]
+    return df_bounced
 
 # Function to filter repeated transactions
 def get_repeated_transactions(df, narr_col):
