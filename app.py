@@ -352,6 +352,7 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    print("hellos")
     if request.method == 'POST':
         if 'file' not in request.files:
             return redirect(request.url)
