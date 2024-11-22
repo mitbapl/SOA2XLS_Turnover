@@ -316,7 +316,7 @@ def get_bounced_transactions(df, narr_col):
     # Extract Bounced Transactions into a separate DataFrame
     # bounced_keywords = "return|bounced|failed|ecs|nach|emi|si"
     bounced_transactions = df[df['Narration'].str.contains(bounced_keywords, case=False, na=False)].copy()
-    return df_bounced
+    return bounced_transactions
 
 # Function to filter repeated transactions
 def get_repeated_transactions(df, narr_col):
