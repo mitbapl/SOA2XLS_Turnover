@@ -302,19 +302,23 @@ def safe_numeric_conversion(df, c):
     # Example conversion
     for c in df.columns:
         try:
-            df[c] = pd.to_numeric(df[c])
+            df_cns[c] = pd.to_numeric(df[c])
+            print(df_cns)
         except ValueError:
         # Handle the error, e.g., keep the column as is or log the error
             print(f"Could not convert column {c} to numeric.")
-    return df
+    return df_cns
 
 # Function to filter bounced transactions
 def get_bounced_transactions(df, narr_col):
+    #df_cns = safe_numeric_conversion(df, 'Debits')
     bounce_keywords = ['bounced', 'returned', 'dishonored']
+    print("entered get bounced")
     df_bounced = df[
         df[narr_col].str.contains('|'.join(bounce_keywords), case=False, na=False)
         & ~df[narr_col].str.contains('upi', case=False, na=False)
     ]
+    print(df_bounced)
     return df_bounced
 
 # Function to filter repeated transactions
@@ -351,10 +355,10 @@ def upload_file():
             if df_statement is not None:
                 # Apply numeric conversion to necessary columns
                 # Create DataFrame
-                df_cns = df_statement
+                # df_cns = df_statement
 
                 # Convert 'Debit' column to numeric
-                df_cns = safe_numeric_conversion(df_cns, 'Debits')
+                
 
                 # Extract bounced, repeated, and above average transactions
                 narr_col = 'Narration'  # Adjust based on your processed DataFrame
