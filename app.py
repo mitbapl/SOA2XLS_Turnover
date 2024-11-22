@@ -49,6 +49,9 @@ def process_hdfc(f):
                                pandas_options={ 'header': None }) 
 
         df = pd.DataFrame()
+        for i, df in enumerate(pars):
+            print(f"Table {i}:")
+            print(df.head(10))
         tables = []
         for i, c in enumerate(pars):
             if c.shape[1] == 7:
