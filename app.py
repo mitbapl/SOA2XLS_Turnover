@@ -304,7 +304,7 @@ def process_hdfc(f):
 def get_bounced_transactions(df, narr_col):
     # Expanded list of bounce-related keywords
     bounce_keyword = [
-        'bounced', 'returned', 'dishonored', 'nach', 'ecs', 'ach',
+        'bounced', 'returned', 'dishonored',
         'return', 'chq return', 'failed', 'rejected', 'unpaid'
     ]
     # Combine keywords into a single regex pattern
