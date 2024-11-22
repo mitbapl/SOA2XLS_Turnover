@@ -303,14 +303,19 @@ def process_hdfc(f):
 # Bounced Transactions Function
 def get_bounced_transactions(df, narr_col):
     # Expanded list of bounce-related keywords
-    bounce_keywords = [
+    bounce_keyword = [
         'bounced', 'returned', 'dishonored', 'nach', 'ecs', 'ach',
         'return', 'chq return', 'failed', 'rejected', 'unpaid'
     ]
     # Combine keywords into a single regex pattern
-    pattern = '|'.join(bounce_keywords)
+    bounced_keywords = '|'.join(bounce_keyword)
     # Filter rows where the narration column contains any of the keywords
-    df_bounced = df[df[narr_col].str.contains(pattern, case=False, na=False)]
+    # Replace missing narration values with an empty string
+    df['Narration'] = df['Narration'].fillna("")
+
+    # Extract Bounced Transactions into a separate DataFrame
+    # bounced_keywords = "return|bounced|failed|ecs|nach|emi|si"
+    bounced_transactions = df[df['Narration'].str.contains(bounced_keywords, case=False, na=False)].copy()
     return df_bounced
 
 # Function to filter repeated transactions
