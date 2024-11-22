@@ -367,7 +367,7 @@ def upload_file():
                 dep_col = 'Credits'
 
                 # Apply the filter functions
-                df_bounced = get_bounced_transactions(df_cns, narr_col)
+                df_bounced = get_bounced_transactions(df_statement, narr_col)
                 df_repeated = get_repeated_transactions(df_statement, narr_col)
                 df_above_avg = get_above_average_transactions(df_statement, bal_col, wdl_col, dep_col)
 
