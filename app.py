@@ -300,28 +300,18 @@ def process_hdfc(f):
         print("Error:", e)
         return None, None
 
-# Function to safely convert columns to numeric
-def safe_numeric_conversion(df, c):
-    # Example conversion
-    for c in df.columns:
-        try:
-            df_cns[c] = pd.to_numeric(df[c])
-            print(df_cns)
-        except ValueError:
-        # Handle the error, e.g., keep the column as is or log the error
-            print(f"Could not convert column {c} to numeric.")
-    return df_cns
-
-# Function to filter bounced transactions
 def get_bounced_transactions(df, narr_col):
-    #df_cns = safe_numeric_conversion(df, 'Debits')
-    bounce_keywords = ['bounced', 'returned', 'dishonored']
-    print("entered get bounced")
+    # Broaden keywords to match entries like "ACHDEBITRETURNCHARGES"
+    bounce_keywords = ['bounced', 'returned', 'dishonored', 'return', 'charge', 'bounce']
+    
+    # Filter rows containing bounce-related keywords
     df_bounced = df[
         df[narr_col].str.contains('|'.join(bounce_keywords), case=False, na=False)
-        & ~df[narr_col].str.contains('upi', case=False, na=False)
     ]
-    print(df_bounced)
+    
+    print("Bounced Transactions Identified:")
+    print(df_bounced.head())
+    
     return df_bounced
 
 # Function to filter repeated transactions
