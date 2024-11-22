@@ -362,7 +362,7 @@ def upload_file():
         if file:
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(file_path)
-
+            print(file_path)
             # Process the file
             df_statement, df_turnover = process_hdfc(file_path)
 
@@ -397,6 +397,7 @@ def upload_file():
                 return send_file(output_file, as_attachment=True)
 
             else:
+                print("exitt")
                 return "Error in processing the file"
 
     return redirect(url_for('index'))
