@@ -339,7 +339,7 @@ def index():
 def get_image(filename):
     # The 'template/images' folder is served statically
     image_folder = os.path.join(app.root_path, 'template', 'images')
-    return send_from_directory(image_folder, "my-image.png")
+    return send_from_directory(image_folder, filename)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
