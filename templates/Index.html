@@ -16,6 +16,8 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
+            justify-content: center;
+            align-items: center;
         }
         .left-section, .right-section {
             flex: 1;
@@ -70,11 +72,43 @@
             background: linear-gradient(90deg, #0056b3, #003f7f);
             transform: translateY(-2px);
         }
-        @media (min-width: 768px) {
-            .container {
-                flex-direction: row; /* Horizontal layout for larger screens */
+
+        /* Hourglass Animation */
+        .hourglass {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            margin: 30px auto;
+        }
+        .hourglass:before, .hourglass:after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #007bff;
+            border-radius: 50%;
+            animation: bounce 1s infinite ease-in-out;
+        }
+        .hourglass:before {
+            top: 0;
+            left: 50%;
+            margin-left: -6px;
+            animation-delay: 0.5s;
+        }
+        .hourglass:after {
+            bottom: 0;
+            left: 50%;
+            margin-left: -6px;
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
             }
         }
+
     </style>
 </head>
 <body>
@@ -94,11 +128,27 @@
                     Choose File
                 </label>
                 <input type="file" id="file-input" name="file" accept=".pdf">
-
+                
                 <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary mt-3">Upload and Analyze</button>
+                <button type="submit" class="btn btn-primary mt-3" onclick="showHourglass()">Upload and Analyze</button>
+                
+                <!-- Hourglass Loader -->
+                <div class="hourglass" id="hourglass" style="display:none;"></div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Function to show the hourglass during submission
+        function showHourglass() {
+            document.getElementById('hourglass').style.display = 'block';
+            
+            // Simulate form submission with a delay (you can replace this with actual form submission)
+            setTimeout(function() {
+                document.getElementById('hourglass').style.display = 'none'; // Hide hourglass after "uploading"
+                alert("File uploaded successfully!");
+            }, 3000); // Simulate 3 seconds of "processing"
+        }
+    </script>
 </body>
 </html>
