@@ -8,74 +8,90 @@
     <style>
         body {
             background-color: #f8f9fa;
-            color: #333;
+            font-family: Arial, sans-serif;
         }
         .container {
-            max-width: 600px;
+            max-width: 900px;
+            margin-top: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
         }
-        .card {
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .left-section {
+            background-color: #ffffff;
+            padding: 40px;
+            flex: 1 1 50%;
+        }
+        .right-section {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 40px;
+            flex: 1 1 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .right-section h3 {
+            font-weight: bold;
+        }
+        .right-section p {
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+        .form-control, .btn-primary {
+            border-radius: 25px;
         }
         .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
+            padding: 10px 30px;
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
             background-color: #0056b3;
-            border-color: #0056b3;
         }
-        .explanation {
+        .features {
             margin-top: 20px;
-            font-size: 0.9rem;
-            line-height: 1.6;
         }
-        .progress {
-            margin-top: 10px;
-            display: none;
+        .features li {
+            margin-bottom: 10px;
+        }
+        .features li::before {
+            content: "✔";
+            margin-right: 10px;
+            color: #00ffcc;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="text-center">HDFC Statement Processor</h2>
-        <p class="text-center text-muted">Effortlessly process and extract insights from your HDFC bank statements.</p>
-        <div class="card p-4">
-            <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <h2>Analyze Your HDFC Statements Effortlessly</h2>
+            <p class="text-muted">This tool automates the tedious task of processing and analyzing HDFC bank statements. Save time and get actionable insights from your financial data.</p>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="file">Upload a PDF File:</label>
-                    <input type="file" class="form-control-file" id="file" name="file" accept=".pdf" required>
+                    <label for="file">Upload Your HDFC Statement (PDF):</label>
+                    <input type="file" class="form-control" id="file" name="file" accept=".pdf" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Upload and Process</button>
-                <div class="progress mt-3">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;"></div>
-                </div>
+                <button type="submit" class="btn btn-primary btn-block">Upload and Analyze</button>
             </form>
         </div>
-        <div class="text-center mt-4">
-            <p class="text-muted">This tool only accepts HDFC bank statement PDFs.</p>
-        </div>
-        <div class="explanation text-center">
-            <p>This project automates the tedious task of analyzing HDFC bank statements. Upload your PDF, and the tool will extract and present the data in a structured, user-friendly format.</p>
+        
+        <!-- Right Section -->
+        <div class="right-section">
+            <h3>Why Use This Tool?</h3>
+            <p>Save hours of manual work by automating the analysis of your HDFC bank statements. Get clear, actionable insights instantly.</p>
+            <ul class="features">
+                <li>Fast and Secure Processing</li>
+                <li>Accurate Financial Insights</li>
+                <li>No Impact on Your Data Privacy</li>
+            </ul>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.getElementById('uploadForm').addEventListener('submit', function(event) {
-        const progressBar = document.querySelector('.progress');
-        const progress = document.querySelector('.progress-bar');
-        
-        // Display progress bar
-        progressBar.style.display = 'block';
-        progress.style.width = '50%';
-        progress.innerText = 'Uploading...';
-
-        // The form will now post the file to the server as the default action is not prevented.
-    });
-    </script>
 </body>
 </html>
