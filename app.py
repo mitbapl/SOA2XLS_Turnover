@@ -338,7 +338,7 @@ def index():
 @app.route('/images/my-image.png')
 def get_image():
     # Serve the specific file 'my-image.png'
-    image_folder = os.path.join(app.root_path, 'template', 'images')
+    image_folder = os.path.join(app.root_path, 'templates', 'images')
     return send_from_directory(image_folder, 'my-image.png')
 
 @app.route('/upload', methods=['POST'])
