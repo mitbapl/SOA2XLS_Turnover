@@ -333,6 +333,13 @@ def get_above_average_transactions(df, bal_col, wdl_col, dep_col):
 @app.route('/')
 def index():
     return render_template('/Index.html')
+    
+# Route to serve images from the images folder
+@app.route('/images/my-image.png')
+def get_image(filename):
+    # The 'template/images' folder is served statically
+    image_folder = os.path.join(app.root_path, 'template', 'images')
+    return send_from_directory(image_folder, filename)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
