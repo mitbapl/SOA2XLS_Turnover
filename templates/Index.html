@@ -14,7 +14,7 @@
         }
         .container {
             display: flex;
-            flex-direction: column; /* Stacks sections vertically for mobile */
+            flex-direction: column;
             height: 100vh;
         }
         .left-section, .right-section {
@@ -34,19 +34,27 @@
         .right-section {
             background-color: #ffffff;
         }
-        .right-section h2 {
-            font-size: 24px;
+        .custom-file-upload {
+            display: inline-block;
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            color: white;
+            padding: 10px 25px;
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .right-section p {
-            color: #6c757d;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .form-control, .btn-primary {
+            text-transform: uppercase;
+            border: none;
             border-radius: 25px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .custom-file-upload:hover {
+            background: linear-gradient(90deg, #0056b3, #003f7f);
+            transform: translateY(-2px);
+        }
+        #file-input {
+            display: none; /* Hide the actual file input */
         }
         .btn-primary {
             padding: 10px 30px;
@@ -64,10 +72,7 @@
         }
         @media (min-width: 768px) {
             .container {
-                flex-direction: row; /* Horizontal layout for tablets/desktops */
-            }
-            .right-section h2, .right-section p {
-                text-align: left;
+                flex-direction: row; /* Horizontal layout for larger screens */
             }
         }
     </style>
@@ -83,13 +88,15 @@
             <div>
                 <h2>Analyze Your HDFC Statements Effortlessly</h2>
                 <p>This tool automates the tedious task of processing and analyzing HDFC bank statements. Save time and get actionable insights from your financial data.</p>
-                <form action="/upload" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="file">Upload Your HDFC Statement (PDF):</label>
-                        <input type="file" class="form-control" id="file" name="file" accept=".pdf" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Upload and Analyze</button>
-                </form>
+                
+                <!-- Custom File Upload -->
+                <label for="file-input" class="custom-file-upload">
+                    Choose File
+                </label>
+                <input type="file" id="file-input" name="file" accept=".pdf">
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary mt-3">Upload and Analyze</button>
             </div>
         </div>
     </div>
