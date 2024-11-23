@@ -66,18 +66,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const progressBar = document.querySelector('.progress');
-            const progress = document.querySelector('.progress-bar');
-            progressBar.style.display = 'block';
-            progress.style.width = '50%';
+        const progressBar = document.querySelector('.progress');
+        const progress = document.querySelector('.progress-bar');
+        
+        // Display progress bar
+        progressBar.style.display = 'block';
+        progress.style.width = '50%';
+        progress.innerText = 'Uploading...';
 
-            // Simulating an upload (replace with actual backend call)
-            setTimeout(() => {
-                progress.style.width = '100%';
-                progress.innerText = 'Upload Complete!';
-            }, 2000);
-        });
+        // The form will now post the file to the server as the default action is not prevented.
+    });
     </script>
 </body>
 </html>
