@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,5 +94,15 @@
             </div>
         </div>
     </div>
+    <div id="status">Waiting for updates...</div>
+    <script>
+        const socket = io();
+
+        // Listen for progress updates from the server
+        socket.on('progress', (data) => {
+        document.getElementById('status').innerText = data.status;
+        });
+     </script>
+
 </body>
 </html>
