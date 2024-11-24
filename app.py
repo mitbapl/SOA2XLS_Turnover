@@ -7,8 +7,11 @@ import os
 import math
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning, module="tabula")
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
+socketio = SocketIO(app)  # Enable real-time updates
+
 # Set the JAVA_HOME environment variable to the Java installation directory
 # os.environ["JAVA_HOME"] = '/opt/homebrew/opt/openjdk/libexec/openjdk.jdk'
 # os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server/libjvm.so'
@@ -38,6 +41,35 @@ def isnan(value):
 
 # HDFC Processing Function
 def process_hdfc(f):
+    try:
+        # Emit progress: Starting the process
+        socketio.emit('progress', {'status': 'Reading PDF...'})
+        
+        # Step 1: Extract tables from PDF
+        pars = tabula.read_pdf(f, pages='all', silent=True, stream=True, multiple_tables=True, pandas_options={'header': None})
+        socketio.emit('progress', {'status': 'PDF tables extracted successfully.'})
+        
+        # Step 2: Process extracted data
+        socketio.emit('progress', {'status': 'Processing extracted data...'})
+        tables = []
+        for i, c in enumerate(pars):
+            if c.shape[1] in [6, 7, 8]:
+                tables.append(c)
+        df = pd.concat(tables, ignore_index=True)
+        socketio.emit('progress', {'status': 'Data merged into a single table.'})
+        
+        # Step 3: Analyze Data (e.g., extract columns, clean rows)
+        socketio.emit('progress', {'status': 'Analyzing data...'})
+        # Add more data cleaning and transformations here
+        # ...
+
+        # Emit progress: Completion
+        socketio.emit('progress', {'status': 'Data analysis completed.'})
+        return df, None  # Return processed data or turnover (adjust as needed)
+    
+    except Exception as e:
+        socketio.emit('progress', {'status': f'Error: {str(e)}'})
+        return None, None
     # print(os.environ['JAVA_HOME'])
     #print(os.environ['PATH'])
     try:
@@ -392,6 +424,5 @@ def upload_file():
                 return "Error in processing the file"
 
     return redirect(url_for('index'))
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)  # Adjust port as necessary
+    socketio.run(app, host='0.0.0.0', port=10000)
