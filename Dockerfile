@@ -28,5 +28,5 @@ COPY requirements.txt .
 EXPOSE 10000
 
 # Start the Flask application
-# CMD ["python", "app.py"]
-CMD ["python", "-m", "eventlet", "-w", "0", "app.py"]
+CMD ["python", "app.py"]
+# CMD ["python", "-m", "eventlet", "-w", "0", "app.py"]
